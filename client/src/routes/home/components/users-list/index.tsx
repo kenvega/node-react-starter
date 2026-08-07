@@ -4,8 +4,6 @@ import { ContainerLoader } from "@/components/ui";
 import { User } from "@/models/user.model";
 import * as userService from "@/services/user.service";
 
-import styles from "./styles.module.css";
-
 const dateFormatter = new Intl.DateTimeFormat("es", {
   day: "2-digit",
   month: "short",
@@ -36,26 +34,31 @@ export default function UsersList() {
   }
 
   if (error) {
-    return <p className={styles["users-list__error"]}>{error}</p>;
+    return <p className="text-destructive">{error}</p>;
   }
 
   if (users.length === 0) {
-    return (
-      <p className={styles["users-list__empty"]}>No hay usuarios registrados.</p>
-    );
+    return <p className="text-muted-foreground">No hay usuarios registrados.</p>;
   }
 
   return (
-    <ul className={styles["users-list"]}>
+    <ul className="flex flex-col gap-2 text-left">
       {users.map((user) => (
-        <li key={user.id} className={styles["users-list__item"]}>
-          <div className={styles["users-list__info"]}>
-            <span className={styles["users-list__email"]}>{user.email}</span>
-            <span className={styles["users-list__date"]}>
+        <li
+          key={user.id}
+          className="flex items-center justify-between gap-4 rounded-lg border border-border bg-background px-4 py-3"
+        >
+          <div className="flex min-w-0 flex-col">
+            <span className="font-medium [overflow-wrap:anywhere]">
+              {user.email}
+            </span>
+            <span className="text-sm text-muted-foreground">
               Registrado el {dateFormatter.format(new Date(user.createdAt))}
             </span>
           </div>
-          <span className={styles["users-list__role"]}>{user.role}</span>
+          <span className="shrink-0 rounded-full bg-secondary-background px-3 py-1 text-xs leading-4 font-medium text-secondary-foreground capitalize">
+            {user.role}
+          </span>
         </li>
       ))}
     </ul>

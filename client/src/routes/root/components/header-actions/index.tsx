@@ -3,8 +3,6 @@ import { Link, useNavigate } from "react-router";
 import { Button } from "@/components/ui";
 import { useAuth } from "@/contexts/auth.context";
 
-import styles from "./styles.module.css";
-
 export default function HeaderActions() {
   const navigate = useNavigate();
   const { user, logout } = useAuth();
@@ -20,32 +18,26 @@ export default function HeaderActions() {
   }
 
   return (
-    <nav aria-label="Autenticación de usuario" className={styles["header-actions"]}>
-      <ul className={styles["header-actions__list"]}>
+    <nav aria-label="Autenticación de usuario" className="flex items-center">
+      <ul className="flex items-center gap-4 text-sm font-medium">
         {user ? (
           <>
-            <li className={styles["header-actions__item"]}>
-              Bienvenido {user.email}
-            </li>
-            <li className={styles["header-actions__item"]}>
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={onLogout}
-              >
+            <li>Bienvenido {user.email}</li>
+            <li>
+              <Button variant="ghost" size="sm" onClick={onLogout}>
                 Cerrar sesión
               </Button>
             </li>
           </>
         ) : (
           <>
-            <li className={styles["header-actions__item"]}>
-              <Link to="/login" className={styles["header-actions__link"]}>
+            <li>
+              <Link to="/login" className="hover:underline hover:underline-offset-2">
                 Iniciar sesión
               </Link>
             </li>
-            <li className={styles["header-actions__item"]}>
-              <Link to="/signup" className={styles["header-actions__link"]}>
+            <li>
+              <Link to="/signup" className="hover:underline hover:underline-offset-2">
                 Crear una cuenta
               </Link>
             </li>

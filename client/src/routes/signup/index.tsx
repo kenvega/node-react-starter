@@ -4,8 +4,6 @@ import { Link, useNavigate } from "react-router";
 import { Button, Container, InputField, Section } from "@/components/ui";
 import { useAuth } from "@/contexts/auth.context";
 
-import styles from "./styles.module.css";
-
 export default function Signup() {
   const navigate = useNavigate();
   const { signup } = useAuth();
@@ -34,9 +32,11 @@ export default function Signup() {
 
   return (
     <Section>
-      <Container className={styles.signup}>
-        <h1 className={styles.signup__title}>Crea una cuenta</h1>
-        <form onSubmit={handleSubmit} className={styles.signup__form}>
+      <Container className="mx-auto max-w-sm">
+        <h1 className="mb-10 text-center text-2xl leading-7 font-bold">
+          Crea una cuenta
+        </h1>
+        <form onSubmit={handleSubmit} className="flex flex-col gap-6">
           <InputField
             label="Correo electrónico"
             name="email"
@@ -51,20 +51,16 @@ export default function Signup() {
             required
             autoComplete="current-password"
           />
-          <Button
-            size="lg"
-            className={styles.signup__submit}
-            disabled={loading}
-          >
+          <Button size="lg" className="w-full" disabled={loading}>
             {loading ? "Creando..." : "Crear cuenta"}
           </Button>
-          {error && <p className={styles.signup__error}>{error}</p>}
+          {error && (
+            <p className="mt-2 text-center text-sm text-destructive">{error}</p>
+          )}
         </form>
-        <div className={styles.signup__footer}>
-          <span className={styles.signup__footer_text}>
-            ¿Ya tienes una cuenta?
-          </span>
-          <Link to="/login" className={styles.signup__footer_link}>
+        <div className="mt-10 flex justify-center gap-2 text-sm leading-6">
+          <span className="text-muted-foreground">¿Ya tienes una cuenta?</span>
+          <Link to="/login" className="text-accent-foreground hover:underline">
             Inicia sesión
           </Link>
         </div>

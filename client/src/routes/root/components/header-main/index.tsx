@@ -5,7 +5,6 @@ import { Container, Separator } from "@/components/ui";
 
 import HeaderActions from "../header-actions";
 import MainNav from "../main-nav";
-import styles from "./styles.module.css";
 
 const navigation = [
   { to: "/", label: "User List" },
@@ -14,14 +13,14 @@ const navigation = [
 
 export default function HeaderMain() {
   return (
-    <Container className={styles["header-main"]}>
-      <div className={styles["header-main__top"]}>
+    <Container className="relative">
+      <div className="flex h-12 items-center justify-between">
         <Link to="/">
           <img src={logo} alt="Kudos inicio" width="128" height="32" />
         </Link>
         <HeaderActions />
       </div>
-      <Separator className={styles["header-main__separator"]} />
+      <Separator className="block sm:hidden" />
       <MainNav items={navigation} />
     </Container>
   );

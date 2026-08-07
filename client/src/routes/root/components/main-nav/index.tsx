@@ -1,7 +1,6 @@
-import { clsx } from "clsx";
 import { NavLink } from "react-router";
 
-import styles from "./styles.module.css";
+import { cn } from "@/lib/utils";
 
 interface MainNavProps {
   items: {
@@ -12,17 +11,20 @@ interface MainNavProps {
 
 export default function MainNav({ items }: MainNavProps) {
   return (
-    <nav aria-label="Navegación principal" className={styles["main-nav"]}>
-      <ul className={styles["main-nav__list"]} role="menubar">
+    <nav
+      aria-label="Navegación principal"
+      className="static sm:absolute sm:top-1/2 sm:left-1/2 sm:-translate-x-1/2 sm:-translate-y-1/2"
+    >
+      <ul className="flex h-12 justify-center" role="menubar">
         {items.map((item) => (
-          <li key={item.to} className={styles["main-nav__item"]} role="none">
+          <li key={item.to} className="flex justify-center" role="none">
             <NavLink
               to={item.to}
               role="menuitem"
               className={({ isActive }) =>
-                clsx(
-                  styles["main-nav__link"],
-                  isActive && styles["main-nav__link--active"]
+                cn(
+                  "inline-flex items-center justify-center p-3 text-sm font-medium transition-colors hover:bg-accent-background",
+                  isActive ? "text-accent-foreground" : "text-muted-foreground"
                 )
               }
             >

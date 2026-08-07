@@ -1,7 +1,6 @@
 import { ComponentPropsWithoutRef, useId } from "react";
 
 import { Input } from "../input";
-import styles from "./styles.module.css";
 import { Label } from "../label";
 
 interface InputFieldProps extends ComponentPropsWithoutRef<"input"> {
@@ -18,7 +17,7 @@ export function InputField({
   const id = providedId || generatedId;
 
   return (
-    <div className={styles["input-field"]}>
+    <div className="flex flex-col gap-2">
       <Label htmlFor={id}>{label}</Label>
       <Input id={id} className={className} {...props} />
     </div>

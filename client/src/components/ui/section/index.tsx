@@ -1,7 +1,6 @@
-import { clsx } from "clsx";
 import { HTMLAttributes } from "react";
 
-import styles from "./styles.module.css";
+import { cn } from "@/lib/utils";
 
 interface SectionProps extends HTMLAttributes<HTMLElement> {
   children: React.ReactNode;
@@ -9,7 +8,7 @@ interface SectionProps extends HTMLAttributes<HTMLElement> {
 
 export function Section({ className, children, ...props }: SectionProps) {
   return (
-    <section className={clsx(styles.section, className)} {...props}>
+    <section className={cn("py-12 md:py-16", className)} {...props}>
       {children}
     </section>
   );

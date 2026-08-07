@@ -1,13 +1,11 @@
 import { Container } from "@/components/ui";
 
-import styles from "./styles.module.css";
-
 export default function About() {
   return (
-    <section className={styles.about}>
-      <Container className={styles.about__container}>
-        <h2 className={styles.about__title}>About</h2>
-        <p className={styles.about__text}>
+    <section className="flex-1 text-center">
+      <Container className="max-w-4xl py-12">
+        <h2 className="mb-4 text-4xl font-bold md:text-6xl">About</h2>
+        <p className="mb-8 text-xl text-muted-foreground">
           This is the about page.
         </p>
       </Container>

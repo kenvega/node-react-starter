@@ -1,7 +1,6 @@
-import { clsx } from "clsx";
 import * as React from "react";
 
-import styles from "./styles.module.css";
+import { cn } from "@/lib/utils";
 
 const Select = React.forwardRef<
   HTMLSelectElement,
@@ -9,7 +8,11 @@ const Select = React.forwardRef<
 >(({ className, children, ...props }, ref) => (
   <select
     ref={ref}
-    className={clsx(styles["basic-select"], className)}
+    className={cn(
+      "w-full rounded-xl border border-border bg-background px-3 py-2 text-sm",
+      "disabled:cursor-not-allowed disabled:opacity-50",
+      className
+    )}
     {...props}
   >
     {children}

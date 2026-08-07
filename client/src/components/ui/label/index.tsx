@@ -1,8 +1,7 @@
 import * as LabelPrimitive from "@radix-ui/react-label";
-import { clsx } from "clsx";
 import * as React from "react";
 
-import styles from "./styles.module.css";
+import { cn } from "@/lib/utils";
 
 const Label = React.forwardRef<
   React.ElementRef<typeof LabelPrimitive.Root>,
@@ -10,7 +9,11 @@ const Label = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <LabelPrimitive.Root
     ref={ref}
-    className={clsx(styles.label, className)}
+    className={cn(
+      "text-sm leading-none font-medium",
+      "peer-disabled:cursor-not-allowed peer-disabled:opacity-70",
+      className
+    )}
     {...props}
   />
 ));

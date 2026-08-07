@@ -21,19 +21,22 @@ export function ThemeProvider({
   useEffect(() => {
     const root = window.document.documentElement;
 
-    root.classList.remove("light", "dark");
+    const apply = (resolved: "light" | "dark") => {
+      root.classList.remove("light", "dark");
+      root.classList.add(resolved);
+    };
 
-    if (theme === "system") {
-      const systemTheme = window.matchMedia("(prefers-color-scheme: dark)")
-        .matches
-        ? "dark"
-        : "light";
-
-      root.classList.add(systemTheme);
+    if (theme !== "system") {
+      apply(theme);
       return;
     }
 
-    root.classList.add(theme);
+    const query = window.matchMedia("(prefers-color-scheme: dark)");
+    const onChange = () => apply(query.matches ? "dark" : "light");
+
+    onChange();
+    query.addEventListener("change", onChange);
+    return () => query.removeEventListener("change", onChange);
   }, [theme]);
 
   const value = {
