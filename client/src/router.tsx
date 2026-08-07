@@ -6,6 +6,7 @@ import Home from "./routes/home";
 import Login from "./routes/login";
 import NotFound from "./routes/not-found";
 import Root from "./routes/root";
+import SidebarLayout from "./routes/sidebar-layout";
 import Signup from "./routes/signup";
 
 const router = createBrowserRouter([
@@ -13,16 +14,25 @@ const router = createBrowserRouter([
     element: <Root />,
     children: [
       {
-        index: true,
-        element: (
-          <ProtectedRoute>
-            <Home />
-          </ProtectedRoute>
-        ),
-      },
-      {
-        path: "/about",
-        element: <About />,
+        element: <SidebarLayout />,
+        children: [
+          {
+            index: true,
+            element: (
+              <ProtectedRoute>
+                <Home />
+              </ProtectedRoute>
+            ),
+          },
+          {
+            path: "/about",
+            element: <About />,
+          },
+          {
+            path: "*",
+            element: <NotFound />,
+          },
+        ],
       },
       {
         path: "/login",
@@ -31,10 +41,6 @@ const router = createBrowserRouter([
       {
         path: "/signup",
         element: <Signup />,
-      },
-      {
-        path: "*",
-        element: <NotFound />,
       },
     ],
   },
