@@ -1,0 +1,48 @@
+
+# REST API Test File
+
+# =====================
+# Variables
+# =====================
+
+@baseUrl = http://localhost:3000/api
+@testEmail = test@test.com
+@testPassword = 123456
+
+
+# =====================
+# Auth Endpoints
+# =====================
+
+### Register a new user
+POST {{baseUrl}}/register
+Content-Type: application/json
+
+{
+  "email": "{{testEmail}}",
+  "password": "{{testPassword}}",
+  "confirmPassword": "{{testPassword}}"
+}
+
+### Login
+POST {{baseUrl}}/login
+Content-Type: application/json
+
+{
+  "email": "{{testEmail}}",
+  "password": "{{testPassword}}"
+}
+
+### Get current user profile (requires login)
+GET {{baseUrl}}/me
+
+### Logout (requires login)
+POST {{baseUrl}}/logout
+
+
+# =====================
+# User Endpoints
+# =====================
+
+### List all users (requires login)
+GET {{baseUrl}}/users
