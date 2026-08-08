@@ -7,7 +7,7 @@ import HeaderActions from "../header-actions";
 
 export default function HeaderMain() {
   return (
-    <Container>
+    <Container className="max-w-none">
       <div className="flex h-12 items-center justify-between">
         <Link to="/">
           <img src={logo} alt="Kudos inicio" width="128" height="32" />
