@@ -1,6 +1,6 @@
 import { toUserDto } from "@/models/user.model.js";
 import { usersService } from "@/services/users.service.js";
-import { UnauthorizedError } from "@/shared/errors.js";
+import { BadRequestError, UnauthorizedError } from "@/shared/errors.js";
 import type { NextFunction, Request, Response } from "express";
 
 export const usersController = {
@@ -14,6 +14,29 @@ export const usersController = {
       const users = await usersService.getUsers();
 
       return res.status(200).json({ data: users.map(toUserDto) });
+    } catch (error) {
+      return next(error);
+    }
+  },
+
+  async updateRole(req: Request, res: Response, next: NextFunction) {
+    try {
+      // requireAdmin already rejected anonymous requests, so userId is present.
+      const actorId = req.session.userId!;
+
+      const targetId = Number(req.params["id"]);
+      if (!Number.isInteger(targetId)) {
+        throw new BadRequestError("Identificador de usuario inválido");
+      }
+
+      const { role } = req.body as Partial<{ role: string }>;
+      if (!role) {
+        throw new BadRequestError("El campo rol es obligatorio");
+      }
+
+      const user = await usersService.updateUserRole(actorId, targetId, role);
+
+      return res.status(200).json({ data: toUserDto(user) });
     } catch (error) {
       return next(error);
     }

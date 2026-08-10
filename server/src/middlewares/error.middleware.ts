@@ -2,6 +2,7 @@ import type { Request, Response, NextFunction } from "express";
 import {
   ValidationError,
   UnauthorizedError,
+  ForbiddenError,
   NotFoundError,
   BadRequestError,
   ConflictError,
@@ -28,6 +29,9 @@ export function errorHandler(
   }
   if (err instanceof UnauthorizedError) {
     return res.status(401).json({ error: err.message });
+  }
+  if (err instanceof ForbiddenError) {
+    return res.status(403).json({ error: err.message });
   }
   if (err instanceof NotFoundError) {
     return res.status(404).json({ error: err.message });

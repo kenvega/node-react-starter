@@ -33,4 +33,12 @@ export const usersRepository = {
     const result = await query<User>("SELECT * FROM users WHERE id = $1", [id]);
     return result.rows[0] || null;
   },
+
+  async updateRole(id: number, role: string): Promise<User | null> {
+    const result = await query<User>(
+      "UPDATE users SET role = $1, updated_at = CURRENT_TIMESTAMP WHERE id = $2 RETURNING *",
+      [role, id]
+    );
+    return result.rows[0] || null;
+  },
 };

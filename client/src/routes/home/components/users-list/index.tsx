@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-import { ContainerLoader } from "@/components/ui";
+import { ContainerLoader, Option, Select } from "@/components/ui";
 import { User } from "@/models/user.model";
 import * as userService from "@/services/user.service";
 
@@ -10,10 +10,17 @@ const dateFormatter = new Intl.DateTimeFormat("es", {
   year: "numeric",
 });
 
+const roles = ["user", "admin"];
+
 export default function UsersList() {
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [pendingId, setPendingId] = useState<number | null>(null);
+  const [roleError, setRoleError] = useState<{
+    id: number;
+    message: string;
+  } | null>(null);
 
   useEffect(() => {
     userService
@@ -28,6 +35,29 @@ export default function UsersList() {
       )
       .finally(() => setLoading(false));
   }, []);
+
+  async function onRoleChange(id: number, role: string) {
+    setPendingId(id);
+    setRoleError(null);
+    try {
+      const updated = await userService.updateUserRole(id, role);
+      setUsers((users) =>
+        users.map((user) => (user.id === id ? updated : user))
+      );
+    } catch (error) {
+      /*
+        `users` is left untouched, so the controlled <select> re-renders back to
+        the role the server still has.
+      */
+      setRoleError({
+        id,
+        message:
+          error instanceof Error ? error.message : "Error al actualizar el rol",
+      });
+    } finally {
+      setPendingId(null);
+    }
+  }
 
   if (loading) {
     return <ContainerLoader />;
@@ -46,19 +76,36 @@ export default function UsersList() {
       {users.map((user) => (
         <li
           key={user.id}
-          className="flex items-center justify-between gap-4 rounded-lg border border-border bg-background px-4 py-3"
+          className="flex flex-col gap-2 rounded-lg border border-border bg-background px-4 py-3"
         >
-          <div className="flex min-w-0 flex-col">
-            <span className="font-medium [overflow-wrap:anywhere]">
-              {user.email}
-            </span>
-            <span className="text-sm text-muted-foreground">
-              Registrado el {dateFormatter.format(new Date(user.createdAt))}
-            </span>
+          <div className="flex items-center justify-between gap-4">
+            <div className="flex min-w-0 flex-col">
+              <span className="font-medium [overflow-wrap:anywhere]">
+                {user.email}
+              </span>
+              <span className="text-sm text-muted-foreground">
+                Registrado el {dateFormatter.format(new Date(user.createdAt))}
+              </span>
+            </div>
+            <Select
+              className="w-auto shrink-0 capitalize"
+              aria-label={`Rol de ${user.email}`}
+              value={user.role}
+              disabled={pendingId === user.id}
+              onChange={(event) => onRoleChange(user.id, event.target.value)}
+            >
+              {roles.map((role) => (
+                <Option key={role} value={role} className="capitalize">
+                  {role}
+                </Option>
+              ))}
+            </Select>
           </div>
-          <span className="shrink-0 rounded-full bg-secondary-background px-3 py-1 text-xs leading-4 font-medium text-secondary-foreground capitalize">
-            {user.role}
-          </span>
+          {roleError?.id === user.id && (
+            <p role="alert" className="text-sm text-destructive">
+              {roleError.message}
+            </p>
+          )}
         </li>
       ))}
     </ul>
