@@ -1,6 +1,6 @@
 import env from "./env.js";
 import app from "./app.js";
-import { testConnection, closePool } from "../db/index.js";
+import { testConnection, closePool } from "@/infrastructure/database/client.js";
 
 function shutdown(signal: string) {
   console.log(`\nReceived ${signal}. Closing HTTP server...`);

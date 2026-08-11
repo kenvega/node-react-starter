@@ -1,4 +1,4 @@
-import { query } from "db/index.js";
+import { query } from "@/infrastructure/database/client.js";
 import type { User } from "@/models/user.model.js";
 
 export const usersRepository = {
