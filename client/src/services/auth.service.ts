@@ -67,7 +67,7 @@ export async function signup(email: string, password: string): Promise<User> {
     }
   }
 
-  const user: User = data.user;
+  const user: User = data.data;
   return user;
 }
 
