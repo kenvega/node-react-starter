@@ -1,3 +1,4 @@
+import * as z from "zod";
 import type { Request, Response, NextFunction } from "express";
 import {
   ValidationError,
@@ -35,6 +36,12 @@ export function errorHandler(
   }
   if (err instanceof NotFoundError) {
     return res.status(404).json({ error: err.message });
+  }
+  if (err instanceof z.ZodError) {
+    return res.status(422).json({
+      error: "Error de validación",
+      errors: z.flattenError(err),
+    });
   }
   if (err instanceof ValidationError) {
     return res.status(422).json({ error: err.message, errors: err.errors });
