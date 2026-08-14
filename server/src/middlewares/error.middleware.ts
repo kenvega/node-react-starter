@@ -1,7 +1,6 @@
 import * as z from "zod";
 import type { Request, Response, NextFunction } from "express";
 import {
-  ValidationError,
   UnauthorizedError,
   ForbiddenError,
   NotFoundError,
@@ -42,9 +41,6 @@ export function errorHandler(
       error: "Error de validación",
       errors: z.flattenError(err),
     });
-  }
-  if (err instanceof ValidationError) {
-    return res.status(422).json({ error: err.message, errors: err.errors });
   }
   if (err instanceof ConflictError) {
     return res.status(409).json({ error: err.message });

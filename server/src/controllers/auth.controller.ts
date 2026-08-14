@@ -1,10 +1,12 @@
-import { registerRequestSchema } from "@/schemas/auth.schema.js";
+import {
+  loginRequestSchema,
+  registerRequestSchema,
+} from "@/schemas/auth.schema.js";
 import { toUserDto } from "@/models/user.model.js";
 import { usersService } from "@/services/users.service.js";
 import { UnauthorizedError } from "@/shared/errors.js";
 import { verifyPassword } from "@/shared/hash.js";
 import { commitSession, destroySession } from "@/shared/session.js";
-import type { LoginRequest } from "@/types/auth.types.js";
 import type { NextFunction, Request, Response } from "express";
 
 export const authController = {
@@ -24,9 +26,7 @@ export const authController = {
 
   async login(req: Request, res: Response, next: NextFunction) {
     try {
-      const body = req.body as Partial<LoginRequest>;
-      const email = body.email?.trim() ?? "";
-      const password = body.password ?? "";
+      const { email, password } = loginRequestSchema.parse(req.body);
 
       const user = await usersService.getUserByEmail(email);
 

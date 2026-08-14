@@ -5,16 +5,6 @@ export class NotFoundError extends Error {
   }
 }
 
-export class ValidationError extends Error {
-  constructor(
-    message: string,
-    public errors: Record<string, string[]>
-  ) {
-    super(message);
-    this.name = "ValidationError";
-  }
-}
-
 export class UnauthorizedError extends Error {
   constructor(message: string) {
     super(message);

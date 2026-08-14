@@ -54,3 +54,39 @@ export const registerRequestSchema = z
     error: "Las contraseñas no coinciden",
     path: ["confirmPassword"],
   });
+
+export const loginRequestSchema = z.object(
+  {
+    email: z
+      .string({
+        error: (issue) =>
+          issue.input === undefined
+            ? "El campo email es obligatorio"
+            : "El campo email debe ser texto",
+      })
+      .trim()
+      .min(1, {
+        error: "El campo email es obligatorio",
+        abort: true,
+      })
+      .pipe(
+        z.email({
+          error: "Formato de correo inválido",
+        })
+      ),
+    password: z
+      .string({
+        error: (issue) =>
+          issue.input === undefined
+            ? "El campo contraseña es obligatorio"
+            : "El campo contraseña debe ser texto",
+      })
+      .min(1, {
+        error: "El campo contraseña es obligatorio",
+        abort: true,
+      }),
+  },
+  {
+    error: "El cuerpo de la solicitud debe ser un objeto",
+  }
+);
