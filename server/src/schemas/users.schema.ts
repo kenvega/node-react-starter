@@ -2,11 +2,11 @@ import * as z from "zod";
 
 const invalidUserIdMessage = "Identificador de usuario inválido";
 
-export const userRoleSchema = z.enum(["user", "admin"], {
+export const userRoleSchema = z.enum(["member", "admin"], {
   error: (issue) =>
     issue.input === undefined
       ? "El campo rol es obligatorio"
-      : "Rol inválido. Valores permitidos: user, admin",
+      : "Rol inválido. Valores permitidos: member, admin",
 });
 
 export type UserRole = z.infer<typeof userRoleSchema>;

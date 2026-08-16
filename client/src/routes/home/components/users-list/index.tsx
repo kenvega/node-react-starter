@@ -10,7 +10,7 @@ const dateFormatter = new Intl.DateTimeFormat("es", {
   year: "numeric",
 });
 
-const roles = ["user", "admin"];
+const roles = ["member", "admin"];
 
 export default function UsersList() {
   const [users, setUsers] = useState<User[]>([]);
