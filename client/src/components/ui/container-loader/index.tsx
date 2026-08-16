@@ -14,7 +14,7 @@ export function ContainerLoader({ className }: ContainerLoaderProps) {
         className
       )}
     >
-      <Loader className="size-8 animate-spin" aria-label="Loading" />
+      <Loader className="size-8 animate-spin" aria-label="Cargando" />
     </div>
   );
 }

@@ -8,8 +8,8 @@ import { cn } from "@/lib/utils";
 const STORAGE_KEY = "kudos-ui-sidebar-collapsed";
 
 const navigation = [
-  { to: "/", label: "User List", icon: Users, end: true },
-  { to: "/about", label: "About", icon: Info, end: false },
+  { to: "/", label: "Lista de usuarios", icon: Users, end: true },
+  { to: "/about", label: "Acerca de", icon: Info, end: false },
 ];
 
 export default function Sidebar() {

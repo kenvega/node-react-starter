@@ -13,7 +13,7 @@ export function notFoundHandler(
   _res: Response,
   next: NextFunction
 ) {
-  next(new NotFoundError("Resource not found"));
+  next(new NotFoundError("Recurso no encontrado"));
 }
 
 export function errorHandler(
