@@ -16,10 +16,6 @@ export async function getCurrentUser(): Promise<User | null> {
 
     const data = await response.json();
 
-    if (!data) {
-      throw new Error(data.error);
-    }
-
     return data.data as User;
   } catch (error) {
     console.error("Error fetching current user:", error);
@@ -40,9 +36,7 @@ export async function login(email: string, password: string): Promise<User> {
   const data = await response.json();
 
   if (!response.ok) {
-    if (data.error) {
-      throw new Error(data.error);
-    }
+    throw new Error(data.error ?? "Error al iniciar sesión");
   }
 
   const user: User = data.data;
@@ -62,9 +56,7 @@ export async function signup(email: string, password: string): Promise<User> {
   const data = await response.json();
 
   if (!response.ok) {
-    if (data.error) {
-      throw new Error(data.error);
-    }
+    throw new Error(data.error ?? "Error al crear la cuenta");
   }
 
   const user: User = data.data;
