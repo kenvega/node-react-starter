@@ -64,18 +64,13 @@ export async function signup(email: string, password: string): Promise<User> {
 }
 
 export async function logout(): Promise<void> {
-  try {
-    const response = await fetch(`${API_URL}/api/logout`, {
-      method: "POST",
-      credentials: "include", // sends automatically sessionid on the header
-    });
+  const response = await fetch(`${API_URL}/api/logout`, {
+    method: "POST",
+    credentials: "include", // sends automatically sessionid on the header
+  });
 
-    if (!response.ok) {
-      const errorData = await response.json().catch(() => ({}));
-      throw new Error(errorData.message);
-    }
-  } catch (error) {
-    console.error("Error when logging out:", error);
-    throw error;
+  if (!response.ok) {
+    const errorData = await response.json().catch(() => ({}));
+    throw new Error(errorData.error ?? "Error al cerrar sesión");
   }
 }
